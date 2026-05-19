@@ -1,0 +1,26 @@
+$fontFamily: "Open Sans", sans-serif;
+$fontSize: 16;
+
+$maxWidthContainer: 1170px;
+$md1: 1170px;
+$md2: 1024px;
+$md3: 768px;
+$md4: 480px;
+
+// Design tokens (см. shared/design/colors/colors.ts)
+$colorBgPrimary: #1B1C2D;
+$colorBgAccent: #CFFF57;
+$colorBgReduced: #131420;
+$colorBgSurface: #FFFFFF;
+
+$colorTextPrimary: #FFFFFFF2;
+$colorTextSecondary: #FFFFFF99;
+$colorTextDark: #0A0A10;
+
+$colorSemanticError: #FF385C;
+
+$gradientStart: #FF385C;
+$gradientEnd: #1B1C2D;
+
+$mainColor: $colorTextPrimary;
+$mainBackground: $colorBgPrimary;

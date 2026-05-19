@@ -1,0 +1,40 @@
+import type { ChangeEvent, Dispatch, ReactNode, SetStateAction } from 'react';
+import type { Options, PropsValue } from 'react-select';
+import type { RequiredFieldsType } from '../../Form/interfaces';
+import type { InputTypesEnumValue } from '../enums';
+import type { ISelectOption } from './select-option.interface';
+
+export interface IInputProps {
+  inputType: string;
+  type: InputTypesEnumValue;
+  inputId: string;
+  inputName: string;
+  title?: string;
+  placeholder?: string;
+  value?: boolean | string | number | null | File | string[] | Date | number[];
+  onChange?: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onCheckboxChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  error?: boolean;
+  success?: string;
+  warning?: string;
+  info?: string;
+  selectedValue?: string;
+  disabled?: boolean;
+  IconLeft?: ReactNode;
+  IconRight?: ReactNode;
+  selectOptions?: Options<ISelectOption>;
+  selectValue?: PropsValue<ISelectOption> | PropsValue<ISelectOption[]>;
+  selectOnChange?: (value: string | string[], name: string) => void;
+  maxLength?: number;
+  files?: File[];
+  deleteFile?: (file: File) => void;
+  selectIsMulti?: boolean;
+  description?: string;
+  onDateChange?: (date: Date, name: string) => void;
+  allowTypes?: string[];
+  onFileChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  maxWidth?: string;
+  checked?: boolean;
+  setRequiredFields?: Dispatch<SetStateAction<RequiredFieldsType>>;
+  mask?: string;
+}
