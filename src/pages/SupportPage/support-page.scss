@@ -117,7 +117,87 @@
   &__card-subtitle {
     font-size: 15px;
     color: var(--color-text-secondary);
+    margin-bottom: 12px;
+  }
+
+  &__data-notice {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
     margin-bottom: 28px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  &__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    &--error .support-page__consent-box {
+      border-color: var(--color-semantic-error);
+    }
+  }
+
+  &__consent-box {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: 2px;
+    border-radius: 4px;
+    border: 2px solid var(--color-text-secondary);
+    background: transparent;
+    position: relative;
+  }
+
+  &__consent input:checked + .support-page__consent-box {
+    background: var(--color-bg-accent);
+    border-color: var(--color-bg-accent);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 3px;
+      width: 6px;
+      height: 11px;
+      border: solid var(--color-text-dark);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__consent-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    text-align: left;
+
+    a {
+      color: var(--color-bg-accent);
+      text-decoration: underline;
+
+      &:hover {
+        opacity: 0.85;
+      }
+    }
+  }
+
+  &__consent-error {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--color-semantic-error);
   }
 
   &__form-wrap {
@@ -153,11 +233,29 @@
 
   &__footer {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 
     p {
       font-size: 13px;
       color: var(--color-text-secondary);
+      margin: 0;
     }
+
+    a {
+      color: var(--color-bg-accent);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__footer-muted {
+    font-size: 12px;
+    opacity: 0.85;
   }
 
   // react-select под тёмную тему

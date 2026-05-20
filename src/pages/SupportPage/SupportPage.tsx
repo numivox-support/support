@@ -10,6 +10,7 @@ import {
   PLATFORM_OPTIONS,
   TOPIC_OPTIONS,
 } from './constants/support-form.constants';
+import { PRIVACY_POLICY_URL, supportPageCopy } from './constants/support-page.copy';
 import './support-page.scss';
 
 export function SupportPage() {
@@ -44,16 +45,18 @@ export function SupportPage() {
     setIsSubmitting(true);
     try {
       await submitFeedback(submitBody);
-      toast.success('Message sent! We will reply to your email within 24–48 hours.');
+      toast.success(supportPageCopy.successToast);
       setBody({ ...INITIAL_FORM_BODY });
       setConsentChecked(false);
       setRequiredFields({ ...INITIAL_REQUIRED_FIELDS });
     } catch {
-      toast.error('Could not send your message. Please try again in a moment.');
+      toast.error(supportPageCopy.errorToast);
     } finally {
       setIsSubmitting(false);
     }
   }, []);
+
+  const consentHasError = !requiredFields.consent?.isValid;
 
   return (
     <div className="support-page">
@@ -62,27 +65,20 @@ export function SupportPage() {
 
       <div className="support-page__inner">
         <header className="support-page__hero">
-          <span className="support-page__badge">Numivox · Support</span>
-          <h1 className="support-page__title">
-            Support for a mobile brain training game
-          </h1>
-          <p className="support-page__lead">
-            Numivox is built around fast math blitz rounds: solve problems against the clock,
-            sharpen your focus, and track your progress. If something went wrong in the game,
-            with payments, or your account — reach out using the form below.
-          </p>
+          <span className="support-page__badge">{supportPageCopy.badge}</span>
+          <h1 className="support-page__title">{supportPageCopy.title}</h1>
+          <p className="support-page__lead">{supportPageCopy.lead}</p>
           <ul className="support-page__features">
-            <li>Math blitz and speed challenge modes</li>
-            <li>Progress sync across devices</li>
-            <li>Support team replies by email</li>
+            {supportPageCopy.features.map((feature) => (
+              <li key={feature}>{feature}</li>
+            ))}
           </ul>
         </header>
 
         <section className="support-page__card">
-          <h2 className="support-page__card-title">Contact us</h2>
-          <p className="support-page__card-subtitle">
-            Fill in the fields below and we will forward your request to our support team.
-          </p>
+          <h2 className="support-page__card-title">{supportPageCopy.formTitle}</h2>
+          <p className="support-page__card-subtitle">{supportPageCopy.formSubtitle}</p>
+          <p className="support-page__data-notice">{supportPageCopy.dataNotice}</p>
 
           <div className="support-page__form-wrap">
             {isSubmitting && <Loader />}
@@ -100,7 +96,7 @@ export function SupportPage() {
                   inputId="support-name"
                   inputName="name"
                   title="Your name"
-                  placeholder="How should we address you"
+                  placeholder="How should We address You"
                   value={body.name as string}
                   onChange={handleTextChange}
                   error={!requiredFields.name?.isValid}
@@ -113,7 +109,7 @@ export function SupportPage() {
                   inputType="email"
                   inputId="support-email"
                   inputName="email"
-                  title="Reply email"
+                  title="Your email"
                   placeholder="name@example.com"
                   value={body.email as string}
                   onChange={handleTextChange}
@@ -141,7 +137,7 @@ export function SupportPage() {
                   inputType="text"
                   inputId="support-platform"
                   inputName="platform"
-                  title="Platform"
+                  title="Device"
                   value={body.platform as string}
                   selectOptions={PLATFORM_OPTIONS}
                   selectOnChange={handleSelectChange}
@@ -157,7 +153,7 @@ export function SupportPage() {
                     inputId="support-subject"
                     inputName="subject"
                     title="Subject"
-                    placeholder="e.g. Blitz score not updating"
+                    placeholder="Brief summary of Your request"
                     value={body.subject as string}
                     onChange={handleTextChange}
                     error={!requiredFields.subject?.isValid}
@@ -173,7 +169,7 @@ export function SupportPage() {
                     inputId="support-message"
                     inputName="message"
                     title="Message"
-                    placeholder="What happened, what you expected, and steps to reproduce"
+                    placeholder="Describe Your request in detail"
                     value={body.message as string}
                     onChange={handleTextChange}
                     error={!requiredFields.message?.isValid}
@@ -183,34 +179,65 @@ export function SupportPage() {
                 </div>
 
                 <div className="support-page__form-full">
-                  <Input
-                    type={InputTypesEnum.CHECKBOX}
-                    inputType="checkbox"
-                    inputId="support-consent"
-                    inputName="consent"
-                    title="I agree to the processing of my personal data so support can respond"
-                    checked={consentChecked}
-                    onCheckboxChange={handleConsentChange}
-                    error={!requiredFields.consent?.isValid}
-                    setRequiredFields={setRequiredFields}
-                    disabled={isSubmitting}
-                  />
+                  <label
+                    className={`support-page__consent ${consentHasError ? 'support-page__consent--error' : ''}`}
+                    htmlFor="support-consent"
+                  >
+                    <input
+                      type="checkbox"
+                      id="support-consent"
+                      name="consent"
+                      checked={consentChecked}
+                      onChange={handleConsentChange}
+                      disabled={isSubmitting}
+                    />
+                    <span className="support-page__consent-box" aria-hidden />
+                    <span className="support-page__consent-text">
+                      {supportPageCopy.consentLabel}{' '}
+                      <a
+                        href={PRIVACY_POLICY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {supportPageCopy.consentPrivacyLink}
+                      </a>
+                    </span>
+                  </label>
+                  {consentHasError && (
+                    <span className="support-page__consent-error" role="alert">
+                      {supportPageCopy.consentRequiredError}
+                    </span>
+                  )}
                 </div>
 
                 <div className="support-page__form-actions">
                   <Button
                     type="submit"
-                    value={isSubmitting ? 'Sending…' : 'Send message'}
+                    value={
+                      isSubmitting
+                        ? supportPageCopy.submittingButton
+                        : supportPageCopy.submitButton
+                    }
                     maxWidth="320px"
                   />
                 </div>
-              </div>
+                </div>
             </Form>
           </div>
         </section>
 
         <footer className="support-page__footer">
-          <p>© Numivox. Math blitz and brain training in one app.</p>
+          <p>{supportPageCopy.footer}</p>
+          <p>
+            <a
+              href={PRIVACY_POLICY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {supportPageCopy.footerPrivacy}
+            </a>
+          </p>
+          <p className="support-page__footer-muted">{supportPageCopy.footerUpdated}</p>
         </footer>
       </div>
     </div>

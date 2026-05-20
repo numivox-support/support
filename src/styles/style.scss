@@ -1,5 +1,4 @@
-@use "sass:math";
-@import "./fonts.scss";
-@import "./variables";
-@import "./null";
-@import "./ui";
+@use './fonts';
+@use './variables';
+@use './null';
+@use './ui';

@@ -6,10 +6,7 @@ import type { ISelectOption } from '../../../shared/uikit/Input/interfaces';
 export const FEEDBACK_STUB_URL = 'https://jsonplaceholder.typicode.com/posts';
 
 export const TOPIC_OPTIONS: ISelectOption[] = [
-  { value: 'bug', label: 'In-game bug' },
   { value: 'account', label: 'Account & progress' },
-  { value: 'math-blitz', label: 'Math blitz mode' },
-  { value: 'payments', label: 'Purchases & subscription' },
   { value: 'other', label: 'Other' },
 ];
 
@@ -69,6 +66,6 @@ export const INITIAL_REQUIRED_FIELDS: RequiredFieldsType = {
     required: true,
     type: RequiredFieldsTypesEnum.TEXT,
     isValid: true,
-    errorMessage: 'Consent is required to process your request',
+    errorMessage: 'You must agree to the Privacy Policy to submit a request',
   },
 };
